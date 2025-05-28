@@ -12,7 +12,7 @@ use crate::network::{
     ControlData, CpuSockKey, EventCounters, SingletonKey, SockContext, SockOpsStats, SockStats,
 };
 
-use aya_ebpf::helpers::{bpf_get_smp_processor_id, bpf_get_socket_cookie, bpf_ktime_get_boot_ns};
+use aya_ebpf::helpers::{bpf_get_smp_processor_id, bpf_get_socket_cookie, bpf_ktime_get_ns};
 
 // These imports are flagged as public to allow them to be exported to the crate root.
 pub use aya_ebpf::{
@@ -112,7 +112,7 @@ pub fn nfm_get_cpu_id() -> u64 {
 }
 
 pub fn nfm_now_us() -> u64 {
-    unsafe { bpf_ktime_get_boot_ns() / 1000 }
+    unsafe { bpf_ktime_get_ns() / 1000 }
 }
 
 pub fn nfm_get_sock_cookie(ctx: &SockOpsContext) -> u64 {
